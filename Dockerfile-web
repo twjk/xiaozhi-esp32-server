@@ -2,7 +2,8 @@
 FROM node:18 as web-builder
 WORKDIR /app
 COPY main/manager-web/package*.json ./
-RUN npm install
+RUN npm config set registry https://registry.npmmirror.com && \
+    npm install
 COPY main/manager-web .
 RUN npm run build
 
@@ -11,12 +12,12 @@ FROM maven:3-eclipse-temurin-21-alpine as api-builder
 WORKDIR /app
 COPY main/manager-api/pom.xml .
 COPY main/manager-api/src ./src
-RUN mvn clean package -Dmaven.test.skip=true
+RUN mvn clean package -Dmaven.test.skip=true -Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true
 
 # 第三阶段：构建最终镜像
 FROM eclipse-temurin:21-jdk-jammy
 
-# 安装Nginx并清理缓存
+# 安装Nginx
 RUN apt-get update && \
     apt-get install -y nginx && \
     apt-get clean && \
