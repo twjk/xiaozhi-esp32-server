@@ -23,13 +23,13 @@
               <img loading="lazy" alt="" class="input-icon" src="@/assets/login/password.png" />
               <el-input v-model="form.password" placeholder="请输入密码" type="password" />
             </div>
-            <div style="display: flex; align-items: center; margin-top: 20px; width: 100%; gap: 10px;">
-              <div class="input-box" style="width: calc(100% - 130px); margin-top: 0;">
+            <div class="captcha-container">
+              <div class="input-box captcha-input">
                 <img loading="lazy" alt="" class="input-icon" src="@/assets/login/shield.png" />
-                <el-input v-model="form.captcha" placeholder="请输入验证码" style="flex: 1;" />
+                <el-input v-model="form.captcha" placeholder="请输入验证码" />
               </div>
               <img loading="lazy" v-if="captchaUrl" :src="captchaUrl" alt="验证码"
-                style="width: 150px; height: 40px; cursor: pointer;" @click="fetchCaptcha" />
+                class="captcha-image" @click="fetchCaptcha" />
             </div>
             <div
               style="font-weight: 400;font-size: 14px;text-align: left;color: #5778ff;display: flex;justify-content: space-between;margin-top: 20px;">
